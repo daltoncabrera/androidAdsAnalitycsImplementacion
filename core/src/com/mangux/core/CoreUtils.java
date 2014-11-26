@@ -6,6 +6,7 @@ import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import android.content.Context;
 import android.util.SparseArray;
+import android.view.View;
 
 public class CoreUtils {
 
@@ -23,6 +24,7 @@ public class CoreUtils {
 		}
 		return mTrackers.get(trackerId);
 	}
-
+	
+	
 	
 }

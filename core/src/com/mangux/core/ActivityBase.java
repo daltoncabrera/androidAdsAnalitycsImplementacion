@@ -22,6 +22,7 @@ public class ActivityBase extends Activity {
 	protected String admobUnit;
 	protected String admobInterstitial;
 	protected String screenName;
+	protected String admobTestDevice = "0EBA14E77C354D0B110C239624F74012";
 
 	private AdView mAdView;
 	private InterstitialAd mInterstitial;
@@ -67,14 +68,16 @@ public class ActivityBase extends Activity {
 		mInterstitial = new InterstitialAd(this);
 		mInterstitial.setAdUnitId(admobInterstitial);
 		mInterstitial.setAdListener(new MyAdListener(this));
-
+		loadInterstitial();
 	}
 
-	protected void loadInterstitial(View unusedView) {
-		mInterstitial.loadAd(new AdRequest.Builder().build());
+	protected void loadInterstitial() {
+		
+		mInterstitial.loadAd(new AdRequest.Builder().addTestDevice(admobTestDevice).build());
+		
 	}
 
-	public void showInterstitial(View v) {
+	protected void showInterstitial() {
 		if (mInterstitial.isLoaded()) {
 			mInterstitial.show();
 		}
@@ -87,6 +90,7 @@ public class ActivityBase extends Activity {
 		t.send(new com.google.android.gms.analytics.HitBuilders.AppViewBuilder()
 				.build());
 	}
+	
 
 	@Override
 	protected void onPause() {
@@ -100,9 +104,12 @@ public class ActivityBase extends Activity {
 		super.onResume();
 	}
 
+	
+	
 	@Override
 	protected void onDestroy() {
-		mAdView.destroy();
+		showInterstitial();
+		mAdView.destroy();		
 		super.onDestroy();
 	}
 

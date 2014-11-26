@@ -43,5 +43,6 @@ public class MainActivity extends ActivityBase {
 		this.admobUnit = getResources().getString(R.string.admob_adUni);
 		this.analitycsId = R.xml.global_tracker;
 		this.admobLayoutId = R.id.mainLayout;
+		this.admobTestDevice = "0EBA14E77C354D0B110C239624F74012";
 	}
 }
