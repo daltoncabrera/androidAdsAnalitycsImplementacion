@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <screenName name="MainActivity"> AnalyticsSampleApp ScreenView</screenName>
+    
+    <!-- The following value should be replaced with correct property id. -->
+    <string name="ga_trackingId">UA-47172504-8</string>
+
+</resources>

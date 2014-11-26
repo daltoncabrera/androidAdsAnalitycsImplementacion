@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">paraBaseAnalitycsAndAdmob</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="admob_adUni">ca-app-pub-7723585519094322/3231106892</string>    
+    <string name="admob_interstitial">ca-app-pub-7723585519094322/4707840098</string>
+    <string name="admob_pubId">pub-7723585519094322</string>
+</resources>
