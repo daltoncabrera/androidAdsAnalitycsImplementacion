@@ -6,11 +6,9 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.Tracker;
-import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -24,47 +22,48 @@ public class ActivityBase extends Activity {
 	protected String screenName;
 	protected String admobTestDevice = "0EBA14E77C354D0B110C239624F74012";
 
+	protected boolean showInterstialOnClose = true;
+	protected boolean showBanner = true;
+
 	private AdView mAdView;
 	private InterstitialAd mInterstitial;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
 		preparePlayServices();
 	}
-	
-	protected void initPlayServicesVars()
-	{
-		
+
+	protected void initPlayServicesVars() {
+
 	}
-	
-	protected void preparePlayServices()
-	{
+
+	protected void preparePlayServices() {
 		initPlayServicesVars();
 		prepareAnalitycs();
 		prepareAdmob();
 	}
-	
 
 	protected void prepareAdmob() {
 		// TODO Auto-generated method stub
-		mAdView = new AdView(this);
-		mAdView.setAdUnitId(admobUnit);
-		mAdView.setAdSize(AdSize.BANNER);
-		mAdView.setAdListener(new MyAdListener(this));
-		ViewGroup layout = (ViewGroup) findViewById(admobLayoutId);
-		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-		layout.addView(mAdView, params);
-		mAdView.loadAd(new AdRequest.Builder().build());
-
+		if (showBanner) {
+			mAdView = new AdView(this);
+			mAdView.setAdUnitId(admobUnit);
+			mAdView.setAdSize(AdSize.BANNER);
+			mAdView.setAdListener(new MyAdListener(this));
+			ViewGroup layout = (ViewGroup) findViewById(admobLayoutId);
+			ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+					ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
+			layout.addView(mAdView, params);
+			mAdView.loadAd(new AdRequest.Builder().build());
+		}
 		mInterstitial = new InterstitialAd(this);
 		mInterstitial.setAdUnitId(admobInterstitial);
 		mInterstitial.setAdListener(new MyAdListener(this));
@@ -72,9 +71,10 @@ public class ActivityBase extends Activity {
 	}
 
 	protected void loadInterstitial() {
-		
-		mInterstitial.loadAd(new AdRequest.Builder().addTestDevice(admobTestDevice).build());
-		
+
+		mInterstitial.loadAd(new AdRequest.Builder().addTestDevice(
+				admobTestDevice).build());
+
 	}
 
 	protected void showInterstitial() {
@@ -90,34 +90,37 @@ public class ActivityBase extends Activity {
 		t.send(new com.google.android.gms.analytics.HitBuilders.AppViewBuilder()
 				.build());
 	}
-	
 
 	@Override
 	protected void onPause() {
-		mAdView.pause();
+		if (mAdView != null) {
+			mAdView.pause();
+		}
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		mAdView.resume();
+		if (mAdView != null) {
+			mAdView.resume();
+		}
 		super.onResume();
 	}
 
-	
-	
 	@Override
 	protected void onDestroy() {
-		showInterstitial();
-		mAdView.destroy();		
+		if (showInterstialOnClose) {
+			showInterstitial();
+		}
+		if (mAdView != null) {
+			mAdView.destroy();
+		}
 		super.onDestroy();
 	}
 
-
 	public void onCloseAdds() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 }
